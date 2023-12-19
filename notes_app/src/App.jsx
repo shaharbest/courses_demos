@@ -10,7 +10,11 @@ const defaultNotes = [
 ];
 
 export default function App() {
-  const [notes, setNotes] = useState(defaultNotes);
+  const [notes, setNotes] =
+    useState(defaultNotes.map(curNoteData => ({
+      noteData: curNoteData,
+      isSelected: false,
+    })));
   const [noteContentInputVal, setNoteContentInputVal] =
     useState('');
 
@@ -30,16 +34,27 @@ export default function App() {
     setNotes([...notes, insertedNote]);
   }
 
+  function toggleSelectedByIndex(noteIndex) {
+    const editedNotes = structuredClone(notes);
+    const selectedNote = editedNotes[noteIndex];
+    selectedNote.isSelected = !selectedNote.isSelected
+    setNotes(editedNotes);
+  }
+
   const notesElements = notes.map((n, index) =>
-    <Note noteData={n} key={index}
+    <Note noteData={n.noteData} isSelected={n.isSelected}
+      key={index} onSelectedClick={() => toggleSelectedByIndex(index)}
       onRemoveClick={() => removeNoteByIndex(index)} />);
 
   return <main>
     <form className="new-note-form"
       onSubmit={handleInsertingNote}>
       <input type="text" value={noteContentInputVal}
-        onChange={e => setNoteContentInputVal(e.target.value)}/>
+        onChange={e => setNoteContentInputVal(e.target.value)} />
       <button>insert</button>
+    </form>
+    <form className="remove-all-selected-form">
+      <button>remove selected</button>
     </form>
     <div className="notes-board">
       {notesElements}
@@ -47,11 +62,19 @@ export default function App() {
   </main>;
 }
 
-function Note({ onRemoveClick, noteData: { content, date } }) {
-  return <div className="note">
+function Note({ onRemoveClick, isSelected, onSelectedClick,
+  noteData: { content, date } }) {
+
+  const noteStyle = isSelected ?
+    { backgroundColor: 'hsl(0, 100%, 13%)' } : {};
+
+  return <div className="note" style={noteStyle}>
     <div className="note-header">
       <button onClick={onRemoveClick}>
         X
+      </button>
+      <button onClick={onSelectedClick}>
+        S
       </button>
     </div>
     <p>{content}</p>

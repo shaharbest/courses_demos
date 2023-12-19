@@ -1,6 +1,7 @@
 body {
   background-color: black;
   color: white;
+  /* background-color: hsl(0, 100%, 13%); */
 }
 
 main {
@@ -29,9 +30,10 @@ main {
   justify-content: space-between;
 }
 
-.new-note-form {
+.new-note-form, .remove-all-selected-form {
   display: flex;
   justify-content: center;
+  gap: .5rem;
 }
 
 .note p, .note time {
