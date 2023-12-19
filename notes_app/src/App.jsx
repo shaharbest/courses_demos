@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const defaultNotes = [
   { content: 'buy milk', date: new Date(2023, 2, 10) },
   { content: 'go to gym', date: new Date(2023, 2, 11) },
@@ -10,21 +12,32 @@ const defaultNotes = [
 export default function App() {
   return <main>
     <NotesBoard />
-  </main>
+  </main>;
 }
 
 function NotesBoard() {
-  const notes = defaultNotes.map(n => <Note noteData={n} />)
+  const [notes, setNotes] = useState(defaultNotes);
+
+  function removeNoteByIndex(noteToRemoveIndex) {
+    setNotes(notes.filter((_, index) =>
+      index !== noteToRemoveIndex));
+  }
+
+  const notesElements = notes.map((n, index) =>
+    <Note noteData={n} key={index}
+      onRemoveClick={() => removeNoteByIndex(index)} />);
 
   return <div className="notes-board">
-    {notes}
-  </div>
+    {notesElements}
+  </div>;
 }
 
-function Note({ noteData: { content, date } }) {
+function Note({ onRemoveClick, noteData: { content, date } }) {
   return <div className="note">
     <div className="note-header">
-      <button>X</button>
+      <button onClick={onRemoveClick}>
+        X
+      </button>
     </div>
     <p>{content}</p>
     <time>{date.toLocaleDateString()}</time>
