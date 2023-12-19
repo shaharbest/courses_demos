@@ -31,7 +31,10 @@ export default function App() {
       date: new Date(),
     };
 
-    setNotes([...notes, insertedNote]);
+    setNotes([...notes, {
+      noteData: insertedNote,
+      isSelected: false,
+    }]);
   }
 
   function toggleSelectedByIndex(noteIndex) {
@@ -39,6 +42,11 @@ export default function App() {
     const selectedNote = editedNotes[noteIndex];
     selectedNote.isSelected = !selectedNote.isSelected
     setNotes(editedNotes);
+  }
+
+  function handleRemoveSelected(e) {
+    e.preventDefault();
+    setNotes(notes.filter(n => !n.isSelected));
   }
 
   const notesElements = notes.map((n, index) =>
@@ -53,7 +61,8 @@ export default function App() {
         onChange={e => setNoteContentInputVal(e.target.value)} />
       <button>insert</button>
     </form>
-    <form className="remove-all-selected-form">
+    <form onSubmit={handleRemoveSelected}
+      className="remove-all-selected-form">
       <button>remove selected</button>
     </form>
     <div className="notes-board">
