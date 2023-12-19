@@ -3,6 +3,13 @@ body {
   color: white;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
 .notes-board {
   background-color: hsl(0, 0%, 10%);
   padding: .5rem;
@@ -22,8 +29,9 @@ body {
   justify-content: space-between;
 }
 
-.note p {
-  /* background-color: hsl(0, 0%, 23%); */
+.new-note-form {
+  display: flex;
+  justify-content: center;
 }
 
 .note p, .note time {

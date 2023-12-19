@@ -10,26 +10,41 @@ const defaultNotes = [
 ];
 
 export default function App() {
-  return <main>
-    <NotesBoard />
-  </main>;
-}
-
-function NotesBoard() {
   const [notes, setNotes] = useState(defaultNotes);
+  const [noteContentInputVal, setNoteContentInputVal] =
+    useState('');
 
   function removeNoteByIndex(noteToRemoveIndex) {
     setNotes(notes.filter((_, index) =>
       index !== noteToRemoveIndex));
   }
 
+  function handleInsertingNote(e) {
+    e.preventDefault();
+
+    const insertedNote = {
+      content: noteContentInputVal,
+      date: new Date(),
+    };
+
+    setNotes([...notes, insertedNote]);
+  }
+
   const notesElements = notes.map((n, index) =>
     <Note noteData={n} key={index}
       onRemoveClick={() => removeNoteByIndex(index)} />);
 
-  return <div className="notes-board">
-    {notesElements}
-  </div>;
+  return <main>
+    <form className="new-note-form"
+      onSubmit={handleInsertingNote}>
+      <input type="text" value={noteContentInputVal}
+        onChange={e => setNoteContentInputVal(e.target.value)}/>
+      <button>insert</button>
+    </form>
+    <div className="notes-board">
+      {notesElements}
+    </div>
+  </main>;
 }
 
 function Note({ onRemoveClick, noteData: { content, date } }) {
