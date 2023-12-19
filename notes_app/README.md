@@ -4,6 +4,7 @@
   * text content
   * date
   * remove button
+  * select checkbox
 * Create Notes Board Component
 * Style Components
 * Remove Single Note

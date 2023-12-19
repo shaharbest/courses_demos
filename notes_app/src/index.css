@@ -2,3 +2,30 @@ body {
   background-color: black;
   color: white;
 }
+
+.notes-board {
+  background-color: hsl(0, 0%, 10%);
+  padding: .5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 7rem);
+  gap: .5rem;
+  justify-content: center;
+}
+
+.note {
+  background-color: hsl(0, 0%, 16%);
+  padding: .5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  justify-content: space-between;
+}
+
+.note p {
+  /* background-color: hsl(0, 0%, 23%); */
+}
+
+.note p, .note time {
+  text-align: center;
+}
