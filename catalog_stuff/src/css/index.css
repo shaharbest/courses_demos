@@ -1,0 +1,13 @@
+.catalog-board {
+    gap: .5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.book-card {
+    background-color: hsl(0, 0%, 10%);
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
