@@ -20,7 +20,7 @@
 .catalog-controls {
     background-color: hsl(0, 0%, 5%);
     display: grid;
-    grid-template-columns: 4rem 8rem;
+    grid-template-columns: 7rem 12rem;
     justify-content: center;
     gap: .5rem;
     padding-block: .5rem;
