@@ -1,4 +1,5 @@
 import { Route, Routes, Link } from "react-router-dom";
+import Contact from "./Components/Contact";
 import Catalog from "./Components/Catalog";
 import BookPage from "./Components/BookPage";
 
@@ -35,4 +36,3 @@ function NotFound() { return <h1>404</h1>; }
 function NewBook() { return <h1>New Book</h1>; }
 function Home() { return <h1>Home</h1>; }
 function About() { return <h1>About</h1>; }
-function Contact() { return <h1>Contact</h1>; }
