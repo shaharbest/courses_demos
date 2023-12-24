@@ -1,32 +1,34 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import BookCard from "./BookCard";
 
-// const aviPrefix = "https://fscourse.shaharbest.com/img/avi";
-const imageUrlPrefix = "https://picsum.photos/id";
-// 
+const itemsPerPage = 6;
 
 export default function CatalogBoard({ books }) {
-    const cards = books.map(b =>
+    const [pageNum, setPageNum] = useState(1);
+
+    const pagesCount = Math.ceil(books.length / itemsPerPage);
+
+    const allPagesNums =
+        Array.from({ length: pagesCount }, (_, index) => index + 1);
+
+    const pagesButtons = allPagesNums.map(n => <button
+        onClick={() => setPageNum(n)} key={n}>
+        {n}
+    </button>);
+
+    const currentPageBooks =
+        books.slice(itemsPerPage * (pageNum - 1),
+            itemsPerPage * pageNum);
+
+    const cards = currentPageBooks.map(b =>
         <BookCard key={b.id} book={b} />);
 
-    return <div className="catalog-board">
-      {cards}
-    </div>;
-}
-
-function BookCard({ book: { id, name, price, genre } }) {
-    return <div className="book-card">
-        <h3>
-          <Link to={`/books/${id}`}>
-            {name}
-          </Link>
-        </h3>
-        <img className="book-image"
-          src={getBookImageUrl(id)} alt={`image of ${name}`} />
-        <div className="book-genere">{genre}</div>
-        <div className="book-price">$ {price}</div>
-    </div>
-}
-
-function getBookImageUrl(imageID) {
-  return `${imageUrlPrefix}/${imageID}/200/200`
+    return <>
+        <div className="catalog-board">
+            {cards}
+        </div>
+        <div className="pages">
+            {pagesButtons}
+        </div>
+    </>
 }

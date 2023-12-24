@@ -32,3 +32,14 @@
 {
     text-align: center;
 }
+
+.pages {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    padding-block: 1rem;
+}
+
+.pages button {
+    width: 2rem;
+}
