@@ -6,6 +6,8 @@ const itemsPerPage = 6;
 export default function CatalogBoard({ books }) {
     const [pageNum, setPageNum] = useState(1);
 
+    if (books === null) return 'Loading...';
+
     const pagesCount = Math.ceil(books.length / itemsPerPage);
 
     const allPagesNums =

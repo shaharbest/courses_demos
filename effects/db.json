@@ -1,0 +1,25 @@
+{
+    "products": [
+        {"id": "11", "name": "harry potter", "price": 42, "genre": "fantasy"},
+        {"id": "12", "name": "lord of", "price": 23, "genre": "fantasy"},
+        {"id": "13", "name": "avi biter bio", "price": 99, "genre": "fantasy"},
+        {"id": "14", "name": "shimi", "price": 22, "genre": "horror"},
+        {"id": "15", "name": "tavori", "price": 10, "genre": "horror"},
+        {"id": "16", "name": "gimel", "price": 40, "genre": "horror"},
+        {"id": "17", "name": "yafit", "price": 30, "genre": "comedy"},
+        {"id": "18", "name": "pita", "price": 35, "genre": "comedy"},
+        {"id": "19", "name": "humus classic", "price": 15, "genre": "comedy"},
+        {"id": "20", "name": "humus deluxe", "price": 20, "genre": "comedy"},
+        {"id": "21", "name": "humus supreme", "price": 25, "genre": "comedy"},
+        {"id": "22", "name": "humus special", "price": 18, "genre": "comedy"},
+        {"id": "23", "name": "humus ultimate", "price": 30, "genre": "comedy"},
+        {"id": "24", "name": "humus gourmet", "price": 22, "genre": "comedy"},
+        {"id": "25", "name": "humus classic", "price": 15, "genre": "comedy"},
+        {"id": "26", "name": "humus special", "price": 18, "genre": "comedy"},
+        {"id": "27", "name": "humus supreme", "price": 25, "genre": "comedy"},
+        {"id": "28", "name": "humus deluxe", "price": 20, "genre": "comedy"},
+        {"id": "29", "name": "humus gourmet", "price": 22, "genre": "comedy"},
+        {"id": "30", "name": "humus ultimate", "price": 30, "genre": "comedy"},
+        {"id": "31", "name": "humus classic", "price": 15, "genre": "comedy"}
+    ]
+}
