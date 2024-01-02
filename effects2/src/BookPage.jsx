@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { books } from "./books";
+import { useBook } from "./useBook";
 
 export default function BookPage() {
   const { id } = useParams();
+  const book = useBook(id);
 
-  const book = books.find(b => b.id === id);
+  if (!book) return 'Loading...';
 
-  return <>
-    <pre>{JSON.stringify(book, null, 2)}</pre>
-  </>
+  return <pre>
+    {JSON.stringify(book, null, 2)}
+  </pre>
 }
