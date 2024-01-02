@@ -1,0 +1,6 @@
+
+export const books = [
+  { id: '101', name: 'harry potter', price: 42 },
+  { id: '102', name: 'lord of the rings', price: 23 },
+  { id: '103', name: 'avi biter bio', price: 99 },
+];
