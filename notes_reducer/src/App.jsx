@@ -1,10 +1,6 @@
 import { useState } from "react";
-
-const defaultNotes = [
-  { content: 'go to gym' },
-  { content: 'buy milk' },
-  { content: 'look at the bright side' },
-];
+import { defaultNotes } from "./defaultNotes";
+import Board from "./Board";
 
 export default function App() {
   const [notes, setNotes] =
@@ -27,14 +23,9 @@ export default function App() {
   }
 
   function handleNewNote() {
-    setNotes([ ...notes, { content: newNoteInputVal } ]);
+    setNotes([...notes, { content: newNoteInputVal }]);
     setNewNoteInputVal('');
   }
-
-  const notesElements = notes.map((n, index) =>
-    <Note key={index} noteData={n}
-      onDeleteNote={() => handleDeleteNote(index)}
-      onChangeSelected={isSelected => handleNoteSelected(index, isSelected)} />);
 
   return <>
     <h1>Notes</h1>
@@ -53,20 +44,7 @@ export default function App() {
         </button>
       </form>
     </div>
-    <div className="notes-board">
-      {notesElements}
-    </div>
+    <Board notes={notes} handleDeleteNote={handleDeleteNote}
+      handleNoteSelected={handleNoteSelected} />
   </>;
-}
-
-function Note({ noteData, onDeleteNote, onChangeSelected }) {
-  return <div className="note">
-    <div className="note-header">
-      <button onClick={onDeleteNote}>x</button>
-      <input type="checkbox"
-        onChange={e => onChangeSelected(e.target.checked)}
-        checked={noteData.isSelected} />
-    </div>
-    <p>{noteData.content}</p>
-  </div>;
 }
