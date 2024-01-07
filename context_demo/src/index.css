@@ -1,9 +1,9 @@
 * { margin: 0; }
 
-body {
+/* body {
   background-color: black;
   color: white;
-}
+} */
 
 html, body, #root { height: 100%; }
 #root {
@@ -26,6 +26,6 @@ h2 {
   padding-block: 1em;
 }
 
-#root { padding-inline: 2rem; }
+header, article, footer { padding-inline: 2rem; }
 
 article { padding-block: 1em; }
