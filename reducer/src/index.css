@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  /* background-color: hsl(0, 100%, 13%); */
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.notes-board {
+  background-color: hsl(0, 0%, 10%);
+  padding: .5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  justify-content: center;
+}
+
+.note {
+  background-color: hsl(0, 0%, 16%);
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.new-note-form, .remove-all-selected-form {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+}
+
+.note p, .note time {
+  text-align: center;
+}
