@@ -1,29 +1,54 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import { defaultNotes } from "./defaultNotes";
 import Board from "./Board";
 
+const initialState =
+  defaultNotes.map(n => ({ ...n, isSelected: false }));
+
+function reducer(state, action) {
+  if (action.type === 'delete-note') {
+    const { noteIndexToDelete } = action.payload;
+    return state.filter((_, index) => index !== noteIndexToDelete);
+  }
+  if (action.type === 'note-selection-change') {
+    const { index, isSelected } = action.payload;
+    const notesClone = structuredClone(state);
+    notesClone[index].isSelected = isSelected;
+    return notesClone;
+  }
+  if (action.type === 'delete-selected') {
+    return state.filter(n => !n.isSelected);
+  }
+  if (action.type === 'new-note') {
+    const { content } = action.payload;
+    return [...state, { content }];
+  }
+
+  return state;
+}
+
 export default function App() {
-  const [notes, setNotes] =
-    useState(defaultNotes.map(n => ({ ...n, isSelected: false })));
+  const [notes, dispatch] = useReducer(reducer, initialState);
+
   const [newNoteInputVal, setNewNoteInputVal] = useState('');
 
   function handleDeleteNote(noteIndexToDelete) {
-    setNotes(notes.filter((_, index) =>
-      index !== noteIndexToDelete));
+    dispatch({ type: 'delete-note', payload: { noteIndexToDelete } });
   }
 
   function handleNoteSelected(index, isSelected) {
-    const notesClone = structuredClone(notes);
-    notesClone[index].isSelected = isSelected;
-    setNotes(notesClone)
+    dispatch({
+      type: 'note-selection-change',
+      payload: { index, isSelected }
+    });
   }
 
   function handleDeleteSelected() {
-    setNotes(notes.filter(n => !n.isSelected));
+    dispatch({ type: 'delete-selected' });
   }
 
-  function handleNewNote() {
-    setNotes([...notes, { content: newNoteInputVal }]);
+  function handleNewNote(content) {
+    dispatch({ type: 'new-note', payload: { content } });
     setNewNoteInputVal('');
   }
 
@@ -34,7 +59,7 @@ export default function App() {
         <input type="text"
           value={newNoteInputVal}
           onChange={e => setNewNoteInputVal(e.target.value)} />
-        <button onClick={handleNewNote} type="button">
+        <button onClick={() => handleNewNote(newNoteInputVal)} type="button">
           add note
         </button>
       </form>
