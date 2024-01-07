@@ -9,7 +9,7 @@ h1 {
 
 .notes-board {
   display: grid;
-  grid-template-columns: repeat(3, 5rem);
+  grid-template-columns: repeat(3, 8rem);
   justify-content: center;
   gap: 1rem;
 }
@@ -20,4 +20,15 @@ h1 {
 
 .note p {
   text-align: center;
+}
+
+.notes-board-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 1rem;
+}
+
+.notes-board-controls input {
+  max-width: 7rem;
 }
