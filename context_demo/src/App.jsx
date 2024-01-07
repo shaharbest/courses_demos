@@ -8,19 +8,17 @@ export default function App() {
     setTheme({ isDark: !theme.isDark });
   }
 
-  return <>
-    <ThemeProvider value={theme}>
-      <nav>
-        <label htmlFor="theme-checkbox">theme</label>
-        <input
-          onChange={toggleIsDark}
-          id="theme-checkbox" type="checkbox" />
-      </nav>
-      <Header />
-      <Main />
-      <Footer />
-    </ThemeProvider>
-  </>;
+  return <ThemeProvider value={theme}>
+    <nav>
+      <label htmlFor="theme-checkbox">theme</label>
+      <input
+        onChange={toggleIsDark}
+        id="theme-checkbox" type="checkbox" />
+    </nav>
+    <Header />
+    <Main />
+    <Footer />
+  </ThemeProvider>;
 }
 
 function Main() {
