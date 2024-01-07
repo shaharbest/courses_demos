@@ -1,0 +1,23 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+.notes-board {
+  display: grid;
+  grid-template-columns: repeat(3, 5rem);
+  justify-content: center;
+  gap: 1rem;
+}
+
+.note {
+  background-color: hsl(0, 0%, 10%);
+}
+
+.note p {
+  text-align: center;
+}
