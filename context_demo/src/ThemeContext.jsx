@@ -1,19 +1,13 @@
 import { createContext, useContext } from "react";
 
-const Pita = createContext();
+export const Pita = createContext();
 
-function useTheme() {
+export function useTheme() {
     return useContext(Pita);
 }
 
-function ThemeProvider({ children }) {
-    return <Pita.Provider value={{ isDark: true }}>
+export function ThemeProvider({ children, value }) {
+    return <Pita.Provider value={value}>
         {children}
     </Pita.Provider>;
-}
-
-export {
-    Pita,
-    ThemeProvider,
-    useTheme
 }

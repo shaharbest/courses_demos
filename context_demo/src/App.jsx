@@ -1,8 +1,21 @@
+import { useState } from "react";
 import { ThemeProvider, useTheme } from "./ThemeContext";
 
 export default function App() {
+  const [theme, setTheme] = useState({ isDark: true });
+
+  function toggleIsDark() {
+    setTheme({ isDark: !theme.isDark });
+  }
+
   return <>
-    <ThemeProvider>
+    <ThemeProvider value={theme}>
+      <nav>
+        <label htmlFor="theme-checkbox">theme</label>
+        <input
+          onChange={toggleIsDark}
+          id="theme-checkbox" type="checkbox" />
+      </nav>
       <Header />
       <Main />
       <Footer />
