@@ -8,18 +8,31 @@ const defaultNotes = [
 
 export default function App() {
   const [notes, setNotes] = useState(defaultNotes);
+  const [newNoteInputVal, setNewNoteInputVal] = useState('');
 
-  function deleteNote(noteIndexToDelete) {
+  function handleDeleteNote(noteIndexToDelete) {
     setNotes(notes.filter((_, index) =>
       index !== noteIndexToDelete));
   }
 
+  function handleNewNote(event) {
+    event.preventDefault();
+    setNotes([ ...notes, { content: newNoteInputVal } ]);
+    setNewNoteInputVal('');
+  }
+
   const notesElements = notes.map((n, index) =>
     <Note key={index} noteData={n}
-      onDeleteNote={() => deleteNote(index)} />);
+      onDeleteNote={() => handleDeleteNote(index)} />);
 
   return <>
     <h1>Notes</h1>
+    <form onSubmit={handleNewNote}>
+      <input type="text"
+        value={newNoteInputVal}
+        onChange={e => setNewNoteInputVal(e.target.value)} />
+      <button>add note</button>
+    </form>
     <div className="notes-board">
       {notesElements}
     </div>
