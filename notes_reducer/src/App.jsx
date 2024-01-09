@@ -5,21 +5,55 @@ import Board from "./Board";
 const initialState =
   defaultNotes.map(n => ({ ...n, isSelected: false }));
 
+const ACTIONS = {
+  DELETE_NOTE: 'delete-note',
+  NOTE_SELECTION_CHANGE: 'note-selection-change',
+  DELETE_SELECTED: 'delete-selected',
+  NEW_NOTE: 'new-note',
+};
+
+function createDeleteNoteAction(noteIndexToDelete) {
+  return {
+      type: ACTIONS.DELETE_NOTE,
+      payload: { noteIndexToDelete }
+  };
+}
+
+function createNoteSelectedAction(index, isSelected) {
+  return {
+      type: ACTIONS.NOTE_SELECTION_CHANGE,
+      payload: { index, isSelected }
+  };
+}
+
+function createDeleteSelectedAction() {
+  return {
+      type: ACTIONS.DELETE_SELECTED
+  };
+}
+
+function createNewNoteAction(content) {
+  return {
+      type: ACTIONS.NEW_NOTE,
+      payload: { content }
+  };
+}
+
 function reducer(notes, action) {
-  if (action.type === 'delete-note') {
+  if (action.type === ACTIONS.DELETE_NOTE) {
     const { noteIndexToDelete } = action.payload;
     return notes.filter((_, index) => index !== noteIndexToDelete);
   }
-  if (action.type === 'note-selection-change') {
+  if (action.type === ACTIONS.NOTE_SELECTION_CHANGE) {
     const { index, isSelected } = action.payload;
     const notesClone = structuredClone(notes);
     notesClone[index].isSelected = isSelected;
     return notesClone;
   }
-  if (action.type === 'delete-selected') {
+  if (action.type === ACTIONS.DELETE_SELECTED) {
     return notes.filter(n => !n.isSelected);
   }
-  if (action.type === 'new-note') {
+  if (action.type === ACTIONS.NEW_NOTE) {
     const { content } = action.payload;
     return [...notes, { content }];
   }
@@ -32,22 +66,19 @@ export default function App() {
   const [newNoteInputVal, setNewNoteInputVal] = useState('');
 
   function handleDeleteNote(noteIndexToDelete) {
-    dispatch({ type: 'delete-note', payload: { noteIndexToDelete } });
+    dispatch(createDeleteNoteAction(noteIndexToDelete));
   }
 
   function handleNoteSelected(index, isSelected) {
-    dispatch({
-      type: 'note-selection-change',
-      payload: { index, isSelected }
-    });
+    dispatch(createNoteSelectedAction(index, isSelected));
   }
 
   function handleDeleteSelected() {
-    dispatch({ type: 'delete-selected' });
+    dispatch(createDeleteSelectedAction());
   }
 
   function handleNewNote(content) {
-    dispatch({ type: 'new-note', payload: { content } });
+    dispatch(createNewNoteAction(content));
     setNewNoteInputVal('');
   }
 
