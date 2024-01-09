@@ -5,31 +5,30 @@ import Board from "./Board";
 const initialState =
   defaultNotes.map(n => ({ ...n, isSelected: false }));
 
-function reducer(state, action) {
+function reducer(notes, action) {
   if (action.type === 'delete-note') {
     const { noteIndexToDelete } = action.payload;
-    return state.filter((_, index) => index !== noteIndexToDelete);
+    return notes.filter((_, index) => index !== noteIndexToDelete);
   }
   if (action.type === 'note-selection-change') {
     const { index, isSelected } = action.payload;
-    const notesClone = structuredClone(state);
+    const notesClone = structuredClone(notes);
     notesClone[index].isSelected = isSelected;
     return notesClone;
   }
   if (action.type === 'delete-selected') {
-    return state.filter(n => !n.isSelected);
+    return notes.filter(n => !n.isSelected);
   }
   if (action.type === 'new-note') {
     const { content } = action.payload;
-    return [...state, { content }];
+    return [...notes, { content }];
   }
 
-  return state;
+  return notes;
 }
 
 export default function App() {
   const [notes, dispatch] = useReducer(reducer, initialState);
-
   const [newNoteInputVal, setNewNoteInputVal] = useState('');
 
   function handleDeleteNote(noteIndexToDelete) {
