@@ -3,59 +3,77 @@ import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { useEffect } from 'react';
 
 const initialState = {
-	items: [],
-	status: 'idle'
+    items: [],
+    status: 'idle',
+	postingProductStatus: 'idle',
 };
 
-const fetchProducts = createAsyncThunk('products/fetchProducts', () => {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			const hartaProducts = [
-				{ id: '101', name: 'nisim' },
-				{ id: '102', name: 'shlomo' },
-				{ id: '103', name: 'david' },
-			];
-			resolve(hartaProducts);
-		}, 2000);
+const fetchProducts = createAsyncThunk('products/fetch', async () => {
+    const res = await fetch('http://localhost:3000/products');    
+    return await res.json();
+});
+
+const addHumusProduct = createAsyncThunk('products/add', async () => {
+    const res = await fetch('http://localhost:3000/products', {
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ name: 'humus', price: 666 }),
+		method: 'POST'
 	});
+	return await res.json(); 
 });
 
 const productsSlice = createSlice({
-	name: 'products',
-	initialState,
-	reducers: {},
-	extraReducers(builder) {
-		builder
-			.addCase(fetchProducts.pending, (state, action) => {
-				state.status = 'loading';
-			})
-			.addCase(fetchProducts.fulfilled, (state, action) => {
-				state.status = 'succeeded';
-				state.items = action.payload;
-			})
-	}
+    name: 'products',
+    initialState,
+    reducers: {},
+    extraReducers(builder) {
+        builder
+            .addCase(fetchProducts.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.items = action.payload;
+            })
+            .addCase(addHumusProduct.pending, (state) => {
+                state.postingProductStatus = 'loading';
+            })
+			.addCase(addHumusProduct.fulfilled, (state, action) => {
+                state.postingProductStatus = 'succeeded';
+                state.items.push(action.payload);
+            })
+    }
 });
 
 const store = configureStore({
-	reducer: {
-		products: productsSlice.reducer,
-	},
+    reducer: {
+        products: productsSlice.reducer,
+    },
 });
 
 export default function App() {
-	return <Provider store={store}><ProductsList /></Provider>;
+    return <Provider store={store}><ProductsList /></Provider>;
 }
 
 function ProductsList() {
-	const state = useSelector(state => state.products);
-	const dispatch = useDispatch();
+    const state = useSelector(state => state.products);
+    const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (state.status === 'idle') {
-			dispatch(fetchProducts())
-		}
-	}, [state.status, dispatch])
+    useEffect(() => {
+        let timeoutId;
+        if (state.status === 'idle') {
+            timeoutId = setTimeout(() => {
+                dispatch(fetchProducts())
+            }, 0);
+        }
+        return () => clearTimeout(timeoutId); // Cleanup the timeout on unmount
+    }, [state.status, dispatch])
 
-	return <pre>{JSON.stringify(state, null, 2)}</pre>
+    return <>
+		<button disabled={state.postingProductStatus === 'loading'}
+			onClick={() => dispatch(addHumusProduct())}>
+			add humus
+		</button>
+		<pre>{JSON.stringify(state, null, 2)}</pre>
+	</>
 }
-
